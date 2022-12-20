@@ -16,15 +16,19 @@ function App() {
     fetchData();
   }, []);
   return (
-    <div className="products">
-      {products.length > 0 &&
-        products.map((prod) => {
-          return (
-            <span>
-              <img src={prod.thumbnail} alt={prod.title} />
-            </span>
-          );
-        })}
+    <div>
+      {products.length > 0 && (
+        <div className="products">
+          {products.map((prod) => {
+            return (
+              <span className="products__single">
+                <img src={prod.thumbnail} alt={prod.title} />
+                <span>{prod.title}</span>
+              </span>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }
