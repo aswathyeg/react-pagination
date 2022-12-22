@@ -20,6 +20,15 @@ function App() {
   const handleClickPages = (selectedPage) => {
     setPage(selectedPage);
   };
+  const selectedPageHandler = (handlePage) => {
+    if (
+      handlePage >= 1 &&
+      handlePage <= products.length / 10 &&
+      handlePage != page
+    )
+      setPage(handlePage);
+  };
+
   return (
     <div>
       {products.length > 0 && (
@@ -37,7 +46,10 @@ function App() {
       {products.length > 0 && (
         <div className="pagination">
           <span>
-            <BsFillCaretLeftFill />
+            <BsFillCaretLeftFill
+              onClick={() => selectedPageHandler(page - 1)}
+              className={page > 1 ? "" : "pagination__disabled"}
+            />
           </span>
 
           {[...Array(products.length / 10)].map((_, i) => {
@@ -55,7 +67,12 @@ function App() {
           })}
 
           <span>
-            <BsFillCaretRightFill />
+            <BsFillCaretRightFill
+              onClick={() => selectedPageHandler(page + 1)}
+              className={
+                page < products.length / 10 ? "" : "pagination__disabled"
+              }
+            />
           </span>
         </div>
       )}
