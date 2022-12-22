@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import "./App.css";
-
+import { BsFillCaretLeftFill, BsFillCaretRightFill } from "react-icons/bs";
+//
 function App() {
   const [products, setProducts] = useState([]);
+  const [page, setPage] = useState(1);
   const fetchData = async () => {
     const res = await fetch("https://dummyjson.com/products?limit=100");
     const data = await res.json();
@@ -15,11 +17,14 @@ function App() {
   useEffect(() => {
     fetchData();
   }, []);
+  const handleClickPages = (selectedPage) => {
+    setPage(selectedPage);
+  };
   return (
     <div>
       {products.length > 0 && (
         <div className="products">
-          {products.map((prod) => {
+          {products.slice(page, page * 10).map((prod) => {
             return (
               <span className="products__single">
                 <img src={prod.thumbnail} alt={prod.title} />
@@ -27,6 +32,25 @@ function App() {
               </span>
             );
           })}
+        </div>
+      )}
+      {products.length > 0 && (
+        <div className="pagination">
+          <span>
+            <BsFillCaretLeftFill />
+          </span>
+
+          {[...Array(products.length / 10)].map((_, i) => {
+            return (
+              <span key={i} ocClick={() => handleClickPages(i + 1)}>
+                {i + 1}
+              </span>
+            );
+          })}
+
+          <span>
+            <BsFillCaretRightFill />
+          </span>
         </div>
       )}
     </div>
