@@ -24,7 +24,7 @@ function App() {
     <div>
       {products.length > 0 && (
         <div className="products">
-          {products.slice(page, page * 10).map((prod) => {
+          {products.slice(page * 10 - 10, page * 10).map((prod) => {
             return (
               <span className="products__single">
                 <img src={prod.thumbnail} alt={prod.title} />
@@ -42,7 +42,13 @@ function App() {
 
           {[...Array(products.length / 10)].map((_, i) => {
             return (
-              <span key={i} ocClick={() => handleClickPages(i + 1)}>
+              <span
+                key={i}
+                className={
+                  page === i + 1 ? "pagination__selected" : "pagination"
+                }
+                onClick={() => handleClickPages(i + 1)}
+              >
                 {i + 1}
               </span>
             );
